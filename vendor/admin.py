@@ -1,3 +1,5 @@
 from django.contrib import admin
+from vendor.models import Vendor
 
-# Register your models here.
+# Register vendor models here
+admin.site.register(Vendor)

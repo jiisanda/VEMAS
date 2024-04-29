@@ -7,7 +7,7 @@ from django.db import models
 # Vendor model
 class Vendor(models.Model):
     uvc = models.CharField(max_length=6, unique=True, editable=False)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     contact_details = models.TextField()
     address = models.TextField()
     on_time_delivery_rate = models.FloatField(default=0.0)
