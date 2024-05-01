@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'vendor',
+    'po_tracking',
 ]
 
 MIDDLEWARE = [

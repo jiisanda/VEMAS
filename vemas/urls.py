@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('vendor.urls')),
+    path('', include('po_tracking.urls')),
 ]
