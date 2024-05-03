@@ -6,7 +6,7 @@ from django.db import models
 
 # Vendor model
 class Vendor(models.Model):
-    uvc = models.CharField(max_length=6, unique=True, editable=False)
+    uvc = models.CharField(max_length=6, unique=True, editable=False, primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     contact_details = models.TextField()
     address = models.TextField()

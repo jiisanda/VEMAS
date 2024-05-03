@@ -5,4 +5,4 @@ from vendor.models import Vendor
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        exclude = ['id']
+        fields = '__all__'
