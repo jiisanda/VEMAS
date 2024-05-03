@@ -4,6 +4,8 @@ import string
 from django.db import models
 from django.utils import timezone
 
+from vendor.models import Vendor
+
 
 # Purchase Order Tracking model
 class PurchaseOrder(models.Model):
@@ -12,8 +14,8 @@ class PurchaseOrder(models.Model):
         completed = 'completed'
         canceled = 'canceled'
 
-    po_number = models.CharField(max_length=8, unique=True, editable=False)
-    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE)
+    po_number = models.CharField(max_length=8, unique=True, editable=False, primary_key=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=False)
     order_date = models.DateTimeField(default=timezone.now, blank=False)
     items = models.JSONField()
     quality = models.IntegerField()
