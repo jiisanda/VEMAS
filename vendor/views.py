@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from vendor.models import Vendor
+from vendor.models import Vendor, PerformanceHistory
 from vendor.serializers import VendorSerializer
 
 
@@ -55,3 +55,24 @@ class VendorsDetail(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except AttributeError as e:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': f"{pk} does not exist."})
+
+
+class PerformanceDetails(APIView):
+    """
+    GET performance metrics:
+        - on-time-delivery-rate,
+        - quality-rate,
+        - response-time,
+        - fulfillment-rate
+    """
+    def get_object(self, pk):
+        try:
+            PerformanceHistory.objects.get(vendor=pk)
+        except PerformanceHistory.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk):
+        history = self.get_object(pk)
+        # todo: @jiisanda: Process the response and calculate percentage
+        # serializer = PHistorySerializer(metrics)
+        return Response(status=status.HTTP_200_OK, data={'history': history})     # replace history with calculated metrics.
