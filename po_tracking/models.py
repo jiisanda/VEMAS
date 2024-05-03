@@ -18,7 +18,7 @@ class PurchaseOrder(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=False)
     order_date = models.DateTimeField(default=timezone.now, blank=False)
     items = models.JSONField()
-    quality = models.IntegerField()
+    quantity = models.IntegerField()
     status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.pending)
     quality_rating = models.FloatField(null=True)
     issue_data = models.DateTimeField(default=timezone.now, blank=False)
