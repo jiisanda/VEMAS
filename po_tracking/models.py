@@ -21,7 +21,7 @@ class PurchaseOrder(models.Model):
     quantity = models.IntegerField()
     status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.pending)
     quality_rating = models.FloatField(null=True)
-    issue_data = models.DateTimeField(default=timezone.now, blank=False)
+    issue_date = models.DateTimeField(default=timezone.now, blank=False)
     acknowledgment_date = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):

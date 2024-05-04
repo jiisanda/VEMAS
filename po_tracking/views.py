@@ -1,8 +1,11 @@
 from django.http import Http404
+from django.db.models import Avg, ExpressionWrapper, F, DurationField
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from po_tracking.helper import update_metrics, update_vendor
 from po_tracking.models import PurchaseOrder
 from po_tracking.serializers import POSerializer
 from vendor.models import Vendor
@@ -48,6 +51,7 @@ class PODetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk):
+        # todo: @jiisanda: proper error handling here
         po = self.get_object(pk)
         serializer = POSerializer(po, data=request.data, partial=True)
         if serializer.is_valid():
@@ -63,3 +67,34 @@ class PODetail(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except AttributeError as e:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': f"{pk} does not exist."})
+
+
+class AcknowledgePO(APIView):
+    """
+    Acknowledge Purchase order
+    """
+    def get_object(self, pk):
+        try:
+            return PurchaseOrder.objects.get(po_number=pk)
+        except PurchaseOrder.DoesNotExist:
+            return Http404
+
+    def post(self, request, pk):
+        po = self.get_object(pk)
+        vendor = po.vendor
+
+        # update acknowledgment_date in Purchase order
+        po.acknowledgment_date = timezone.now()
+        po.save()
+
+        # update the average_response_time for vendor
+        average_response_time = PurchaseOrder.objects.filter(vendor=vendor, acknowledgment_date__isnull=False).aggregate(
+            avg_response_time=Avg(
+                ExpressionWrapper(F('acknowledgment_date') - F('issue_date'), output_field=DurationField())
+            )
+        )['avg_response_time']
+
+        vendor.average_response_time = average_response_time
+        vendor.save()
+
+        return Response({'message': 'Purchase order acknowledged successfully'}, status=status.HTTP_200_OK)

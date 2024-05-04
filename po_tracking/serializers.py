@@ -12,5 +12,6 @@ class POSerializer(serializers.ModelSerializer):
         instance.quantity = validated_data.get('quantity', instance.quantity)
         instance.status = validated_data.get('status', instance.status)
         instance.acknowledgment_date = validated_data.get('acknowledgment_date', instance.acknowledgment_date)
+        instance.quality_rating = validated_data.get('quality_rating', instance.quality_rating)
         instance.save()
         return instance
