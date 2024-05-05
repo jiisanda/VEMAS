@@ -35,3 +35,6 @@ class PerformanceHistory(models.Model):
 
     def __str__(self):
         return f"{self.vendor} | {self.date} - Performance"
+
+    class Meta:
+        ordering = ['-date']

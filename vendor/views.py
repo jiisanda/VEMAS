@@ -12,6 +12,7 @@ class VendorsList(APIView):
     """
     List all vendors, or create new vendors.
     """
+
     def get(self, request):
         vendors = Vendor.objects.all()
         serializer = VendorSerializer(vendors, many=True)
@@ -29,6 +30,7 @@ class VendorsDetail(APIView):
     """
     Retrieve, update, or delete a vendor.
     """
+
     def get_object(self, pk):
         try:
             return Vendor.objects.get(uvc=pk)
@@ -65,6 +67,7 @@ class PerformanceDetails(APIView):
         - response-time,
         - fulfillment-rate
     """
+
     def get_object(self, pk):
         try:
             PerformanceHistory.objects.get(vendor=pk)
@@ -75,4 +78,5 @@ class PerformanceDetails(APIView):
         history = self.get_object(pk)
         # todo: @jiisanda: Process the response and calculate percentage
         # serializer = PHistorySerializer(metrics)
-        return Response(status=status.HTTP_200_OK, data={'history': history})     # replace history with calculated metrics.
+        return Response(status=status.HTTP_200_OK,
+                        data={'history': history})  # replace history with calculated metrics.44
