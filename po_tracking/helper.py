@@ -1,11 +1,12 @@
-from typing import Dict
+from typing import Dict, Union
 
 from django.db.models import F, Avg, Q
 
 from po_tracking.models import PurchaseOrder
+from vendor.models import PerformanceHistory, Vendor
 
 
-def update_metrics(vendor: str) -> Dict[str, float]:
+def update_metrics(vendor: str) -> Dict[str, Union[float, str]]:
     completed_pos = PurchaseOrder.objects.filter(vendor=vendor, status='completed')
 
     # Step1: ans = calculate no of completed POs delivered on or before delivery_date
@@ -24,18 +25,26 @@ def update_metrics(vendor: str) -> Dict[str, float]:
         'on_time_delivery_rate': on_time_delivery_rate,
         'quality_rating_avg': quality_rating_avg,
         'fulfillment_rate': fulfillment_rate,
+        'average_response_time': vendor.average_response_time
     }
 
 
-def update_vendor(vendor: str, metrics: Dict[str, float]) -> None:
-    # print(vendor)
-    # vendor = Vendor.objects.get(uvc=vendor)
-
-    print(metrics)
+def update_vendor_and_history(vendor: str, metrics: Dict[str, float]) -> None:
+    # todo: @jiisanda: Error Handling here...
+    vendor = Vendor.objects.get(uvc=vendor)
 
     vendor.on_time_delivery_rate = metrics['on_time_delivery_rate']
     vendor.quality_rating_avg = metrics['quality_rating_avg']
     vendor.fulfillment_rate = metrics['fulfillment_rate']
+    vendor.average_response_time = metrics['average_response_time']
 
     vendor.save()
-    # todo: @jiisanda: Error Handling here...
+
+    # Update history
+    PerformanceHistory(
+        vendor=vendor,
+        on_time_delivery_rate=metrics['on_time_delivery_rate'],
+        quality_rating_avg=metrics['quality_rating_avg'],
+        average_response_time=metrics['average_response_time'],
+        fulfillment_rate=metrics['fulfillment_rate']
+    ).save()

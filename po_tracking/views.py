@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from po_tracking.helper import update_metrics, update_vendor
+from po_tracking.helper import update_metrics, update_vendor_and_history
 from po_tracking.models import PurchaseOrder
 from po_tracking.serializers import POSerializer, POSerializerCreate
 from vendor.models import Vendor
@@ -56,7 +56,6 @@ class PODetail(APIView):
         serializer = POSerializer(po, data=request.data, partial=True)
 
         if serializer.is_valid():
-            # todo: @jiisanda: check weather status got changed
             current_status = po.status
             new_status = serializer.validated_data.get('status')
 
@@ -75,7 +74,7 @@ class PODetail(APIView):
             serializer.save()
 
             metrics = update_metrics(po.vendor)
-            update_vendor(vendor=po.vendor, metrics=metrics)
+            update_vendor_and_history(vendor=po.vendor.uvc, metrics=metrics)
 
             serializer.save()
 
@@ -117,7 +116,13 @@ class AcknowledgePO(APIView):
             )
         )['avg_response_time']
 
-        vendor.average_response_time = average_response_time
-        vendor.save()
+        new_metrics = {
+            'on_time_delivery_rate': vendor.on_time_delivery_rate,
+            'quality_rating_avg': vendor.quality_rating_avg,
+            'average_response_time': average_response_time,
+            'fulfillment_rate': vendor.fulfillment_rate
+        }
+
+        update_vendor_and_history(vendor=vendor.uvc, metrics=new_metrics)
 
         return Response({'message': 'Purchase order acknowledged successfully'}, status=status.HTTP_200_OK)
