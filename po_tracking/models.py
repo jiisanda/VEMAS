@@ -17,10 +17,12 @@ class PurchaseOrder(models.Model):
     po_number = models.CharField(max_length=8, unique=True, editable=False, primary_key=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=False)
     order_date = models.DateTimeField(default=timezone.now, blank=False)
+    expected_delivery_date = models.DateField(blank=True, null=True)
+    actual_delivery_date = models.DateTimeField(blank=True, null=True)
     items = models.JSONField()
     quantity = models.IntegerField()
     status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.pending)
-    quality_rating = models.FloatField(null=True)
+    quality_rating = models.FloatField(null=True, blank=True)
     issue_date = models.DateTimeField(default=timezone.now, blank=False)
     acknowledgment_date = models.DateTimeField(null=True, blank=True)
 
@@ -31,4 +33,4 @@ class PurchaseOrder(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.po_number} | {self.vendor.name}"
+        return f"{self.po_number} | {self.vendor.name} | {self.status}"
