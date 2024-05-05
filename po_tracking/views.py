@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from po_tracking.helper import update_metrics, update_vendor
 from po_tracking.models import PurchaseOrder
-from po_tracking.serializers import POSerializer
+from po_tracking.serializers import POSerializer, POSerializerCreate
 from vendor.models import Vendor
 
 
@@ -28,7 +28,7 @@ class POList(APIView):
         except Vendor.DoesNotExist:
             return Response({"error": "Vendor does not exist"}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = POSerializer(data=request.data)
+        serializer = POSerializerCreate(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -54,10 +54,33 @@ class PODetail(APIView):
         # todo: @jiisanda: proper error handling here
         po = self.get_object(pk)
         serializer = POSerializer(po, data=request.data, partial=True)
+
         if serializer.is_valid():
             # todo: @jiisanda: check weather status got changed
+            current_status = po.status
+            new_status = serializer.validated_data.get('status')
+
+            if current_status != new_status and new_status == 'completed':
+                if serializer.validated_data.get('quality_rating') is None:
+                    return Response({'error': 'Quality rating are required to complete the PO'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
+                po.actual_delivery_date = timezone.now()
+                po.save()
+
+            if serializer.validated_data.get('expected_delivery_date'):
+                po.expected_delivery_date = serializer.validated_data.get('expected_delivery_date')
+                po.save()
+
             serializer.save()
+
+            metrics = update_metrics(po.vendor)
+            update_vendor(vendor=po.vendor, metrics=metrics)
+
+            serializer.save()
+
             return Response(serializer.data)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
