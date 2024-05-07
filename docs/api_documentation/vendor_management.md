@@ -24,6 +24,15 @@ Vendor {
   average_response_time: string [average response time of the vendor] [not editable]
   fulfillment_rate: float [fulfillment rate of the vendor] [not editable]
 }
+
+PerformanceHistory {
+  date: string [date of the performance history]
+  on_time_delivery_rate: float [on time delivery rate of the vendor]
+  quality_rating_avg: float [avg quality rating of the vendor]
+  average_response_time: string [average response time of the vendor]
+  fulfillment_rate: float [fulfillment rate of the vendor]
+  vendor: ForeignKey [Vendor.uvc]
+}
 ```
 
 ## API Endpoints
@@ -174,7 +183,7 @@ GET /api/vendors/{uvc}/performance/
     {
       "date": "string",
       "on_time_delivery_rate": 0.0,
-      "quality_rating": 0.0,
+      "quality_rating_avg": 0.0,
       "average_response_time": "string",
       "fulfillment_rate": 0.0,
       "vendor": "string"
