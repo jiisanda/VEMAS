@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from vendor.models import Vendor, PerformanceHistory
-from vendor.serializers import VendorSerializer
+from vendor.serializers import VendorSerializer, PHistorySerializer
 
 
 # Vendors Profile Management views here.
@@ -70,13 +70,15 @@ class PerformanceDetails(APIView):
 
     def get_object(self, pk):
         try:
-            PerformanceHistory.objects.get(vendor=pk)
+            return PerformanceHistory.objects.filter(vendor=pk)
         except PerformanceHistory.DoesNotExist:
             return Http404
 
     def get(self, request, pk):
-        history = self.get_object(pk)
-        # todo: @jiisanda: Process the response and calculate percentage
-        # serializer = PHistorySerializer(metrics)
+        histories = self.get_object(pk)
+        data = []
+        for history in histories:
+            serializer = PHistorySerializer(history)
+            data.append(serializer.data)
         return Response(status=status.HTTP_200_OK,
-                        data={'history': history})  # replace history with calculated metrics.44
+                        data={'history': data})
