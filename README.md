@@ -49,7 +49,7 @@ python manage.py runserver
 
 7. Import the postman collection to test the API
 
-Download the postman collection from [docs/VEMAS.postman_collection.json)](docs/vemas.postman_collection.json).
+Download the postman collection from [docs/VEMAS.postman_collection.json)](docs/VEMAS.postman_collection.json).
 
 ### Problem Statement
 
