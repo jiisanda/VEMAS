@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "6547ee96-6305-4f54-8181-28b90c5fb193",
+		"name": "VEMAS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20984268"
+	},
+	"item": [
+		{
+			"name": "Vendor Profile Management",
+			"item": [
+				{
+					"name": "/api/vendors/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/vendors/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "hello ji stationary",
+									"type": "text"
+								},
+								{
+									"key": "contact_details",
+									"value": "jiisanda@protonmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Delhi, India",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/vendors/{uvc}/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/:uvc/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								":uvc",
+								""
+							],
+							"variable": [
+								{
+									"key": "uvc",
+									"value": "VMRCCR",
+									"uuid": "462a0ec6-ee38-426c-ad4f-7862df06cc0a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/vendors/{uvc}/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "jiisanda",
+									"type": "text"
+								},
+								{
+									"key": "contact_details",
+									"value": "jiisanda@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Delhi, India",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/:uvc/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								":uvc",
+								""
+							],
+							"variable": [
+								{
+									"key": "uvc",
+									"value": "ZWZ7U5",
+									"uuid": "f6f55a0f-f749-4072-92bb-9422c74d25eb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/vendors/{uvc}/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/:uvc/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								":uvc",
+								""
+							],
+							"variable": [
+								{
+									"key": "uvc",
+									"value": "SZKGI4",
+									"uuid": "765d4559-a885-43cc-9258-ceb25655ed54"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/vendors/{uvvc}/performance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/:uvvc/performance",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								":uvvc",
+								"performance"
+							],
+							"variable": [
+								{
+									"key": "uvvc",
+									"value": "VMRCCR",
+									"uuid": "bc73e7c6-75d5-46a9-a850-5ead6ecf6ba4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchase Order Managment",
+			"item": [
+				{
+					"name": "/api/purchase_orders/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/purchase_orders/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vendor",
+									"value": "VMRCCR",
+									"description": "CharField: FK (Vendors.uvc)",
+									"type": "text"
+								},
+								{
+									"key": "order_date",
+									"value": "",
+									"description": "DateField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "items",
+									"value": "{\"item\":\"stationary\", \"pens\":[\"cello\", \"mitsubishi\"]}",
+									"description": "JSONField",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "100",
+									"description": "IntegerField",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"description": "Choose: 'pending', 'completed', canclled' ",
+									"type": "text"
+								},
+								{
+									"key": "quality_rating",
+									"value": "",
+									"description": "FloatField: 1<=rating<=5",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "issue_data",
+									"value": "",
+									"description": "DateField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "acknowledgment_date",
+									"value": "",
+									"description": "DateField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "expected_delivery_date",
+									"value": "2024-5-9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/purchase_orders/{po_number}/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/:po_number/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								":po_number",
+								""
+							],
+							"variable": [
+								{
+									"key": "po_number",
+									"value": "3ATCCEVD",
+									"uuid": "f366f804-d3d6-48be-9510-741a586321a7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/purchase_orders/{po_number}/",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let current = new Date();\r",
+									"let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();\r",
+									"let cTime = current.getHours() + \":\" + current.getMinutes() + \":\" + current.getSeconds();\r",
+									"let dateTime = cDate + ' ' + cTime;\r",
+									"\r",
+									"pm.globals.set(\"current_timestamp\", dateTime);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "items",
+									"value": "",
+									"description": "JSONField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "quantity",
+									"value": "",
+									"description": "integerField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "completed",
+									"description": "Choose: 'pending', 'completed', canclled' ",
+									"type": "text"
+								},
+								{
+									"key": "acknowledgment_date",
+									"value": "",
+									"description": "DateField",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "quality_rating",
+									"value": "4.6",
+									"description": "FloatField 1<=rating<=5",
+									"type": "text"
+								},
+								{
+									"key": "expected_delivery_date",
+									"value": "2024-05-06",
+									"description": "DateField: YYYY-MM-DD",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "actual_delivery_date",
+									"value": "{{current_timestamp}}",
+									"description": "DateTimeField: to be set before sending \"completed\" put request using {{current_timestamp}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/:po_number/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								":po_number",
+								""
+							],
+							"variable": [
+								{
+									"key": "po_number",
+									"value": "GGSW6MM3",
+									"uuid": "6fd0c52f-11a4-4ea5-a870-ad8833fa0178"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/purchase_orders/{po_number}/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/:po_number/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								":po_number",
+								""
+							],
+							"variable": [
+								{
+									"key": "po_number",
+									"value": "",
+									"uuid": "60c4ec57-6095-4810-bf34-b9effed0feeb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/purchase_orders/{po_number}/acknowledge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/purchase_orders/:po_number/acknowledge",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"purchase_orders",
+								":po_number",
+								"acknowledge"
+							],
+							"variable": [
+								{
+									"key": "po_number",
+									"value": "3ATCCEVD",
+									"uuid": "18c28882-40e2-438e-84ee-181421953803"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Performance Metrics",
+			"item": [
+				{
+					"name": "api/vendors/{vendor}/performance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vendors/:vendor/performance",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"vendors",
+								":vendor",
+								"performance"
+							],
+							"variable": [
+								{
+									"key": "vendor",
+									"value": "VMRCCR",
+									"uuid": "ae875818-69de-4e5c-8355-6d0d1ab04b38"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
